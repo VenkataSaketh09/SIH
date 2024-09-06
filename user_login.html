@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Axis</title>
+    <link rel="stylesheet" href="linearicons/style.css">
+    <link rel="stylesheet" href="./public/user_login.css">
+    <link rel="stylesheet" href="./public/user_reg2.css">
+</head>
+<body>
+    <div class="hero">
+    <div class="container">
+        <div class="logo-title-container">
+            <div class="logo"><img src="./assets/main2-removebg-preview.png" alt="Health Axis Logo" id="heart"></div>
+            <div>
+                <div class="title" style="margin-top:10px;">Health</div>
+                <div class="title">Axis</div>
+                <div class="subtitle">Personalized Healthcare</div> 
+            </div>
+        </div>
+    </div>
+    <div class="btn">
+        <button onclick="window.location.href='doct_login.html'">Doctor</button>
+        <button onclick="window.location.href='userReg.html'">User</button>
+    </div>
+</div>
+<div class="form-only">
+    <form id="loginform">
+        <h3>Login</h3>
+        <div class="form-holder">
+            <span class="lnr lnr-envelope"></span>
+            <input type="text" class="form-control" id="emailId" placeholder="Mail">
+        </div>
+        <div class="form-holder">
+            <span class="lnr lnr-lock"></span>
+            <input type="password" class="form-control" id="passwd" placeholder="Password">
+        </div>
+        <button type="submit">
+            <span>Login</span>
+        </button>
+        <div class="form-footer">
+            <a href="#" class="forgot-password" id="forgetpasslabel">Forgot Password?</a>
+            <p>Don't have an account? <a href="userReg.html">Register</a></p>
+        </div>
+    </form>
+</div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getFirestore,doc,getDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword,sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyCx0ApFEJq8rbrR5KCGDlM1rpk01lKbGLc",
+      authDomain: "health1-eff19.firebaseapp.com",
+      projectId: "health1-eff19",
+      storageBucket: "health1-eff19.appspot.com",
+      messagingSenderId: "524421369831",
+      appId: "1:524421369831:web:e9d437771d12075229b742"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+    
+    const auth = getAuth(app);
+    // const dbref = ref(db);
+
+    let EmailId = document.getElementById("emailId");
+    let Passwordd = document.getElementById("passwd");
+    let MainForm = document.getElementById("loginform");
+    let ForgetPasswordLabel = document.getElementById("forgetpasslabel");
+
+    let SignInUser = (event) => {
+    event.preventDefault();
+    console.log("Form submitted"); // Debug
+    signInWithEmailAndPassword(auth, EmailId.value, Passwordd.value)
+        .then(async(userCredential) => {
+            console.log("User signed in:", userCredential); // Debug
+            let ref = doc(db, "UserAuthList", userCredential.user.uid);
+            const docSnap = await getDoc(ref);
+
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data()); // Debug
+                sessionStorage.setItem("user-info", JSON.stringify({
+                    uname: docSnap.data().name,
+                    pnum: docSnap.data().phone,
+                }));
+                sessionStorage.setItem("user-creds", JSON.stringify(userCredential.user));
+                window.location.href = "user_data.html";
+            } else {
+                console.log("No such document!"); // Debug
+            }
+        })
+        .catch((error) => {
+            console.error("Error during sign in:", error);
+            alert(error.message);
+        });
+}
+
+    let ForgotPassword=()=>{
+        sendPasswordResetEmail(auth,EmailId.value)
+        .then(()=>{
+            alert("A password reset Link has already been sent")
+        })
+        .catch((error)=>{
+            console.log(error.message);
+            console.log(error.code);
+        })
+    } 
+
+    
+    MainForm.addEventListener("submit", SignInUser);
+    ForgetPasswordLabel.addEventListener("click", ForgotPassword);
+</script>
+</body>
+</html>

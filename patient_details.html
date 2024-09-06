@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            /* text-align: center; */
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+            font-size:20px;
+        }
+
+        .patient-details {
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size:20px;
+        }
+
+        .monitoring-card {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+            width: 20%;
+            background-color: #ffffff;
+            margin: 20px;
+            float: left;
+            text-align: center;
+            border-radius: 15px;
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+
+        .monitoring-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .monitoring-card img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 4px solid #007bff;
+        }
+
+        .monitoring-card p {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .monitoring-card button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .monitoring-card button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Clear float */
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+    </style>
+</head>
+<body>
+    <h1>Patient Details</h1>
+    <div class="patient-details">
+        <h2 id="patient-name"></h2>
+        <p id="patient-age"></p>
+        <p id="patient-gender"></p>
+        <p id="patient-email"></p>
+        <p id="patient-phone-number"></p>
+    </div>
+    
+    <div id="monitoring-cards" class="clearfix"></div>
+
+    <script>
+        // Store patient data in a JavaScript object
+        const patients = {
+            1: {
+                name: 'Badri',
+                age: 20,
+                gender: 'Male',
+                email: 'badri@gmail.com',
+                phoneNumber: '1234567893',
+                monitorings: ['BP Monitoring', 'Sugar Monitoring', 'Thyroid Monitoring', 'Cholesterol Monitoring', 'Other Monitoring']
+            },
+            2: {
+                name: 'Dhanush',
+                age: 21,
+                gender: 'Male',
+                email: 'maari@gmail.com',
+                phoneNumber: '9876543210',
+                monitorings: ['BP Monitoring', 'Sugar Monitoring', 'Thyroid Monitoring', 'Cholesterol Monitoring', 'Other Monitoring']
+            },
+            3: {
+                name: 'Karthik',
+                age: 20,
+                gender: 'Male',
+                email: 'karthik@gmail.com',
+                phoneNumber: '6789543456',
+                monitorings: ['BP Monitoring', 'Sugar Monitoring', 'Thyroid Monitoring', 'Cholesterol Monitoring', 'Other Monitoring']
+            },
+            4: {
+                name: 'Dinesh',
+                age: 24,
+                gender: 'Male',
+                email: 'siva@gmail.com',
+                phoneNumber: '9867249856',
+                monitorings: ['BP Monitoring', 'Sugar Monitoring', 'Thyroid Monitoring', 'Cholesterol Monitoring', 'Other Monitoring']
+            },
+            // Add more patients here
+        };
+
+        // Define constant images for each monitoring type
+        const monitoringImages = {
+            'BP Monitoring': './assets/bp.jpg',
+            'Sugar Monitoring': './assets/sugar.jpg',
+            'Thyroid Monitoring': './assets/thyroid.jpg',
+            'Cholesterol Monitoring': './assets/cholestrol.jpg',
+            'Other Monitoring': 'other_image.png'
+        };
+
+        // Get the patient ID from the query string
+        // Get the patient email from the query string
+        // Get the patient email from the query string
+const urlParams = new URLSearchParams(window.location.search);
+const patientEmail = urlParams.get('email');
+console.log('Patient Email:', patientEmail);
+
+// Check if the patient exists by email
+let patient;
+for (const p in patients) {
+    if (patients[p].email.toLowerCase().trim() === patientEmail.toLowerCase().trim()) {
+        patient = patients[p];
+        break;
+    }
+}
+
+if (patient) {
+    // Display the patient details
+    document.getElementById('patient-name').innerHTML = patient.name;
+    document.getElementById('patient-age').innerHTML = `Age: ${patient.age}`;
+    document.getElementById('patient-gender').innerHTML = `Gender: ${patient.gender}`;
+    document.getElementById('patient-email').innerHTML = `Email: ${patient.email}`;
+    document.getElementById('patient-phone-number').innerHTML = `Phone: ${patient.phoneNumber}`;
+
+    // Display the monitoring cards
+    const monitoringCards = document.getElementById('monitoring-cards');
+    patient.monitorings.forEach((monitoringName) => {
+        const card = document.createElement('div');
+        card.className = 'monitoring-card';
+        card.innerHTML = `
+            <img src="${monitoringImages[monitoringName]}" alt="${monitoringName} Image">
+            <p>${monitoringName}</p>
+            <button>View</button>
+        `;
+        monitoringCards.appendChild(card);
+    });
+} else {
+    document.getElementById('patient-name').innerHTML = 'Patient not found';
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+@font-face {
+    font-family: "Muli-Regular";
+    src: url("../fonts/muli/Muli-Regular.ttf");
+}
+@font-face {
+    font-family: "Muli-SemiBold";
+    src: url("../fonts/muli/Muli-SemiBold.ttf");
+}
+* {
+    box-sizing: border-box;
+}
+
+body.form-only {
+    font-family: "Muli-Regular";
+    font-size: 14px;
+    margin: 0;
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: #f0f0f0; /* Light grey background for the whole page */
+}
+
+form {
+    width: 100%;
+    max-width: 435px;
+    padding: 35px;
+    background: #fff; /* White background for the form */
+    border: 1px solid #ddd; /* Light border around the form */
+    box-shadow: none; /* Remove shadow */
+    border-radius: 8px; /* Optional: add rounded corners */
+}
+
+h3 {
+    text-transform: uppercase;
+    font-size: 25px;
+    font-family: "Muli-SemiBold";
+    color: #333;
+    letter-spacing: 3px;
+    text-align: center;
+    margin-bottom: 33px;
+}
+
+.form-holder {
+    position: relative;
+    margin-bottom: 21px;
+}
+
+.form-holder span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    color: #333;
+}
+
+.form-control {
+    border: none;
+    border-bottom: 1px solid #5F9EA0;
+    display: block;
+    width: 100%;
+    height: 38px;
+    background: none;
+    padding: 3px 42px 0;
+    color: #666;
+    font-family: "Muli-SemiBold";
+    font-size: 16px;
+}
+
+.form-control::-webkit-input-placeholder {
+    font-size: 14px;
+    font-family: "Muli-Regular";
+    color: #999;
+}
+
+.form-control:focus {
+    /* border-bottom: 1px solid #accffe; */
+    outline:none;
+}
+
+button {
+    border: none;
+    width: 100%;
+    height: 40px;
+    margin-top: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #007bff;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: "Muli-SemiBold";
+    font-size: 18px;
+    letter-spacing: 2px;
+    transition: background-color 0.3s;
+    border-radius: 5px; /* Optional: add rounded corners */
+}
+
+button:hover {
+    background: #0056b3; /* Adjust hover color */
+}
+
+
+.form-footer {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.form-footer a {
+    color: #007bff;
+    text-decoration: none;
+    font-size:19px;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+.form-footer p {
+    margin-top: 10px;
+    font-size: 21px;
+    color:grey;
+}
+
+.form-footer p a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-footer p a:hover {
+    text-decoration: underline;
+}
+.form-only {
+    position: absolute;
+    right: 10%; 
+    top: 10%; 
+    width: 30%; 
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+

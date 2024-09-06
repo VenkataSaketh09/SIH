@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Axis</title>
+    <link rel="stylesheet" href="linearicons/style.css">
+    <link rel="stylesheet" href="./public/user_reg1.css">
+    <link rel="stylesheet" href="./public/user_reg2.css">
+</head>
+<body>
+    <div class="hero">
+    <div class="container">
+        <div class="logo-title-container">
+            <div class="logo"><img src="./assets/main2-removebg-preview.png" alt="Health Axis Logo" id="heart"></div>
+            <div>
+                <div class="title" style="margin-top:10px;">Health</div>
+                <div class="title">Axis</div>
+                <div class="subtitle">Personalized Healthcare</div> 
+            </div>
+        </div>
+    </div>
+    <div class="btn">
+        <button onclick="window.location.href='user_login.html'">Doctor</button>
+        <button onclick="window.location.href='user_reg.html'">User</button>
+    </div>
+</div>
+<div class="form-only">
+    <form action="" id="mainform">
+        <h3>New Account?</h3>
+        <div class="form-holder">
+            <span class="lnr lnr-user"></span>
+            <input type="text" class="form-control" id="uname" placeholder="Username">
+        </div>
+        <div class="form-holder">
+            <span class="lnr lnr-phone-handset"></span>
+            <input type="text" class="form-control" id="phnum" placeholder="Phone Number">
+        </div>
+        <div class="form-holder">
+            <span class="lnr lnr-envelope"></span>
+            <input type="text" class="form-control" id="emailId" placeholder="Mail">
+        </div>
+        <div class="form-holder">
+            <span class="lnr lnr-lock"></span>
+            <input type="password" class="form-control"  placeholder="Password">
+        </div>
+        <div class="form-holder">
+            <span class="lnr lnr-lock"></span>
+            <input type="password" class="form-control" id="passwd" placeholder="Confirm Password">
+        </div>
+        <button type="submit">
+            <span>Register</span>
+        </button>
+        <div class="form-footer">
+            <p>Already have an account? <a href="user_login.html">Login</a></p>
+        </div>
+    </form>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+        import { getFirestore,doc,setDoc } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+        import { getAuth,createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+        const firebaseConfig = {
+          apiKey: "AIzaSyCx0ApFEJq8rbrR5KCGDlM1rpk01lKbGLc",
+          authDomain: "health1-eff19.firebaseapp.com",
+          projectId: "health1-eff19",
+          storageBucket: "health1-eff19.appspot.com",
+          messagingSenderId: "524421369831",
+          appId: "1:524421369831:web:e9d437771d12075229b742"
+        };
+      
+        const app = initializeApp(firebaseConfig);
+        const db=getFirestore();
+        const auth = getAuth(app);
+
+        let UserName=document.getElementById("uname");
+        let EmailId=document.getElementById("emailId");
+        let PhoneNum=document.getElementById("phnum");
+        let Passwordd=document.getElementById("passwd");
+        let MainForm=document.getElementById("mainform");
+
+        let registerUser=(event)=>{
+            event.preventDefault();
+            createUserWithEmailAndPassword(auth,EmailId.value,Passwordd.value)
+           .then(async(userCredential) => {
+            // console.log(userCredential)
+            let ref=doc(db,"UserAuthList",userCredential.user.uid);
+            await setDoc(ref,{
+                name:UserName.value,
+                phone:PhoneNum.value
+            });
+           })
+           .catch((error)=>{
+            alert(error.message);
+           })
+        }
+        MainForm.addEventListener("submit",registerUser);
+      </script>
+</body>
+</html>
